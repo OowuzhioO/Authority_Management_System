@@ -14,7 +14,7 @@
     <context:component-scan base-package="com.sprout.controller"/>
     <context:component-scan base-package="com.sprout.service"/>
 
-    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/>
+    <!--<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/>-->
 
     <bean class="org.springframework.web.servlet.view.BeanNameViewResolver"/>
 
