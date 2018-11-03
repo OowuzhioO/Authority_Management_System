@@ -1,7 +1,10 @@
 package com.sprout.util;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.sprout.exception.ParamException;
+import org.apache.commons.collections.MapUtils;
 
 import javax.validation.*;
 import java.util.*;
@@ -39,5 +42,20 @@ public class BeanValidator {
         } while (errors.isEmpty());
 
         return errors;
+    }
+
+    public static Map<String, String> validateObject(Object first, Object... objects) {
+        if (objects != null && objects.length > 0) {
+            return validateList(Lists.asList(first, objects));
+        } else {
+            return validate(first, new  Class[0]);
+        }
+    }
+
+    public static void check(Object param) throws ParamException {
+        Map<String, String> map = BeanValidator.validateObject(param);
+        if (MapUtils.isNotEmpty(map)) {
+            throw new ParamException(map.toString());
+        }
     }
 }
