@@ -10,6 +10,9 @@
 
     <!-- 启动注解驱动的spring mvc功能 -->
      <mvc:annotation-driven/>
+    <mvc:interceptors>
+        <bean class="com.sprout.common.HttpInterceptor" />
+    </mvc:interceptors>
 
     <!-- 包扫描 -->
     <context:component-scan base-package="com.sprout.controller"/>
