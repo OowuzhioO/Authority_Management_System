@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -25,9 +26,17 @@ public class SysDeptController {
     @Resource
     private SysTreeService sysTreeService;
 
+
+    @RequestMapping("/dept.page")
+    public ModelAndView page() {
+//        查询dept的jsp
+        return new ModelAndView("dept");
+    }
+
     @RequestMapping("/save.json")
     @ResponseBody
     public JsonData saveDept(DeptParam param) {
+        log.info("hello, run save dept now");
         sysDeptService.save(param);
         return JsonData.success();
     }

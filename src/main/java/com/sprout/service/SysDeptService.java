@@ -83,7 +83,7 @@ public class SysDeptService {
     }
 
     public boolean checkExist(Integer parentId, String deptName, Integer deptId) {
-        return sysDeptMapper.countByNameandParentId(parentId, deptName, deptId) > 0;
+        return sysDeptMapper.countByNameAndParentId(parentId, deptName, deptId) > 0;
     }
 
 

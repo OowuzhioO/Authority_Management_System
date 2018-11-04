@@ -160,7 +160,7 @@
     </foreach>
   </update>
 
-  <select id="countByNameandParentId" parameterType="map" resultType="int">
+  <select id="countByNameAndParentId" parameterType="map" resultType="int">
     SELECT count(1)
     FROM sys_dept
     WHERE name = #{name}
