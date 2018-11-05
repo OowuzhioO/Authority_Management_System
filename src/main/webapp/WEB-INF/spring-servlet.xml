@@ -9,7 +9,7 @@
     <context:annotation-config></context:annotation-config>
 
     <!-- 启动注解驱动的spring mvc功能 -->
-     <mvc:annotation-driven/>
+    <mvc:annotation-driven/>
     <mvc:interceptors>
         <bean class="com.sprout.common.HttpInterceptor" />
     </mvc:interceptors>
