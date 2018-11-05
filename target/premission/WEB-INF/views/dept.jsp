@@ -210,7 +210,7 @@
         }
 
         function bindDeptClick () {
-            $(".dept-delete").click(function () {
+            $(".dept-delete").click(function (e) {
                 e.preventDefault();
                 e.stopPropagation();
                 var deptId = $(this).attr("data-id");
@@ -248,7 +248,7 @@
                             $("#parentId").val(targetDept.parentId);
                             $("#deptName").val(targetDept.name);
                             $("#deptSeq").val(targetDept.seq);
-                            $("#deptRemake").val(targetDept.remark);
+                            $("#deptRemark").val(targetDept.remark);
 
                         }
                     },
@@ -272,13 +272,13 @@
 
         function handleDeptSelected(deptId) {
 
-            if(lastClickDeptId == -1){
-                var lastDept = $("dept_" + lastClickDeptId + " .dd2-content: first");
+            if(lastClickDeptId != -1){
+                var lastDept = $("#dept_" + lastClickDeptId + " .dd2-content:first");
                 lastDept.removeClass("btn-yellow");
                 lastDept.removeClass("no-hover");
             }
 
-            var currentDept = $("dept_" + deptId + " .dd2-content: first");
+            var currentDept = $("#dept_" + deptId + " .dd2-content:first");
             currentDept.addClass("btn-yellow");
             currentDept.addClass("no-hover");
 
@@ -291,67 +291,19 @@
             console.log("load userlist, deptId: " + deptId);
         }
 
-        // $(".dept-add").click(function () {
-        //     $("#dialog-dept-form").dialog({
-        //         model: true,
-        //         title: "新增部门",
-        //         open: function (event, ui) {
-        //             $(".ui-dialog-titilebar-close", $(this).parent()).hide();
-        //             optionStr = "<option value=\"0\">-</option>";
-        //             recursiveRenderDeptSelect(deptList, 1);
-        //             $("#deptForm")[0].reset();
-        //             $("#parentId").html(optionStr);
-        //         },
-        //         buttons : {
-        //             "添加": function (e) {
-        //                 e.preventDefault();
-        //                 updateDept(true, function (data) {
-        //                     $("#dialog-dept-form").dialog("close");
-        //                 }, function (data) {
-        //                     showMessage("新增部门", data.msg, false);
-        //                 })
-        //             },
-        //             "取消": function () {
-        //                 $("#dialog-dept-form").dialog("close");
-        //             }
-        //         }
-        //     })
-        // })
-        //
-        // function recursiveRenderDeptSelect(deptList, level) {
-        //     level = level | 0;
-        //     if (deptList && deptList.length > 0) {
-        //         $(deptList).each(function (i, dept) {
-        //             deptMap[dept.id] = dept;
-        //             var blank = "";
-        //             if (level > 1) {
-        //                 for (var j = 3; j <= level; j++) {
-        //                     blank += "..";
-        //                 }
-        //                 blank += "∟";
-        //             }
-        //
-        //             optionStr += Mustache.render("<option value='{{id}}'>{{name}}</option>", {id: dept.id, name: blank + dept.name});
-        //             if(dept.deptList && dept.deptList.length > 0) {
-        //                 recursiveRenderDeptSelect(dept.deptList, level + 1);
-        //             }
-        //         })
-        //     }
-        // }
-
-        $(".dept-add").click(function() {
+        $(".dept-add").click(function () {
             $("#dialog-dept-form").dialog({
                 model: true,
                 title: "新增部门",
-                open: function(event, ui) {
-                    $(".ui-dialog-titlebar-close", $(this).parent()).hide();
+                open: function (event, ui) {
+                    $(".ui-dialog-titilebar-close", $(this).parent()).hide();
                     optionStr = "<option value=\"0\">-</option>";
                     recursiveRenderDeptSelect(deptList, 1);
                     $("#deptForm")[0].reset();
                     $("#parentId").html(optionStr);
                 },
                 buttons : {
-                    "添加": function(e) {
+                    "添加": function (e) {
                         e.preventDefault();
                         updateDept(true, function (data) {
                             $("#dialog-dept-form").dialog("close");
@@ -363,8 +315,8 @@
                         $("#dialog-dept-form").dialog("close");
                     }
                 }
-            });
-        });
+            })
+        })
 
         function recursiveRenderDeptSelect(deptList, level) {
             level = level | 0;
@@ -373,23 +325,24 @@
                     deptMap[dept.id] = dept;
                     var blank = "";
                     if (level > 1) {
-                        for(var j = 3; j <= level; j++) {
+                        for (var j = 3; j <= level; j++) {
                             blank += "..";
                         }
                         blank += "∟";
                     }
+
                     optionStr += Mustache.render("<option value='{{id}}'>{{name}}</option>", {id: dept.id, name: blank + dept.name});
-                    if (dept.deptList && dept.deptList.length > 0) {
+                    if(dept.deptList && dept.deptList.length > 0) {
                         recursiveRenderDeptSelect(dept.deptList, level + 1);
                     }
-                });
+                })
             }
         }
 
         function updateDept(isCreate, successCallback, failCallback) {
             $.ajax({
                 url: isCreate ? "/sys/dept/save.json" : "/sys/dept/update.json",
-                data: $("deptForm").serializeArray(),
+                data: $("#deptForm").serializeArray(),
                 type: 'POST',
                 success: function (result) {
                     if (result.ret) {

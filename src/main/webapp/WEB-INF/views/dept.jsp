@@ -210,7 +210,7 @@
         }
 
         function bindDeptClick () {
-            $(".dept-delete").click(function () {
+            $(".dept-delete").click(function (e) {
                 e.preventDefault();
                 e.stopPropagation();
                 var deptId = $(this).attr("data-id");
@@ -248,7 +248,7 @@
                             $("#parentId").val(targetDept.parentId);
                             $("#deptName").val(targetDept.name);
                             $("#deptSeq").val(targetDept.seq);
-                            $("#deptRemake").val(targetDept.remark);
+                            $("#deptRemark").val(targetDept.remark);
 
                         }
                     },
@@ -272,13 +272,13 @@
 
         function handleDeptSelected(deptId) {
 
-            if(lastClickDeptId == -1){
-                var lastDept = $("dept_" + lastClickDeptId + " .dd2-content: first");
+            if(lastClickDeptId != -1){
+                var lastDept = $("#dept_" + lastClickDeptId + " .dd2-content:first");
                 lastDept.removeClass("btn-yellow");
                 lastDept.removeClass("no-hover");
             }
 
-            var currentDept = $("dept_" + deptId + " .dd2-content: first");
+            var currentDept = $("#dept_" + deptId + " .dd2-content:first");
             currentDept.addClass("btn-yellow");
             currentDept.addClass("no-hover");
 
@@ -342,7 +342,7 @@
         function updateDept(isCreate, successCallback, failCallback) {
             $.ajax({
                 url: isCreate ? "/sys/dept/save.json" : "/sys/dept/update.json",
-                data: $("deptForm").serializeArray(),
+                data: $("#deptForm").serializeArray(),
                 type: 'POST',
                 success: function (result) {
                     if (result.ret) {
